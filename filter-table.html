@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<!-- npx tailwindcss -i ./src/input.css -o style.css --watch -->
+
+<body>
+    <section class="px-4">
+        <div class="container mt-5 pb-5 pt-5 bg-sky-400 rounded-xl shadow-lg">
+            <div class="row">
+                <div class="offset-md-3 flex justify-center col-md-6">
+                    <input type="search" class="form-control px-4 rounded-full py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" id="search" placeholder="Live Searching...">
+                </div>
+            </div>
+
+            <h3 id="error" class="text-center mt-3 text-3xl text-red-600"></h3>
+
+            <div class="row">
+                <div class="offset-md-1 col-md-10">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-5">
+                            <thead class="bg-slate-500 text-white">
+                                <tr class="text-left">
+                                    <th class="px-4 py-2">Roll No</th>
+                                    <th class="px-4 py-2">Name</th>
+                                    <th class="px-4 py-2">Father Name</th>
+                                    <th class="px-4 py-2">Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mytable" class="text-gray-700">
+                                <!-- Table rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        var array = [
+            {
+                rollno: "1",
+                name: "talha",
+                fathername: "liaqat ali khan",
+                contact: "0346722423"
+            },
+            {
+                rollno: "2",
+                name: "imad",
+                fathername: "khan",
+                contact: "0346262838"
+            },
+            {
+                rollno: "3",
+                name: "tariq",
+                fathername: "Ali",
+                contact: "0457353332"
+            },
+            {
+                rollno: "4",
+                name: "kamal",
+                fathername: "janan",
+                contact: "0342563722"
+            },
+            {
+                rollno: "5",
+                name: "sami",
+                fathername: "abdullah",
+                contact: "0342673826"
+            }
+        ];
+
+        function showtable(curarray) {
+            document.getElementById("mytable").innerHTML = "";
+
+            if (curarray.length === 0) {
+                document.getElementById("error").innerHTML = `<span class="text-danger"> Not found! </span>`;
+            } else {
+                document.getElementById("error").innerHTML = "";
+
+                for (var i = 0; i < curarray.length; i++) {
+                    document.getElementById("mytable").innerHTML +=
+                        `<tr class="hover:bg-gray-100 border-b">
+                            <td class="px-4 py-2">${curarray[i].rollno}</td>
+                            <td class="px-4 py-2">${curarray[i].name}</td>
+                            <td class="px-4 py-2">${curarray[i].fathername}</td>
+                            <td class="px-4 py-2">${curarray[i].contact}</td>
+                        </tr>`;
+                }
+            }
+        }
+
+        showtable(array);
+
+        // Searching functionality
+        document.getElementById("search").addEventListener("keyup", function () {
+            var search = this.value.toLowerCase();
+            var newarray = array.filter(function (val) {
+                return val.rollno.includes(search) || val.name.includes(search) || val.fathername.includes(search) || val.contact.includes(search);
+            });
+            showtable(newarray);
+        });
+
+        
+    </script>
+</body>
+
+
+
+
+    
+
+</html>
